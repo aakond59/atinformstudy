@@ -1,0 +1,125 @@
+﻿@using atinformstudy.Models;
+@using Microsoft.AspNet.Identity;
+@model List<GroupStudent>
+
+@{
+    ViewBag.Title = "Мои курсы";
+}
+
+@{
+    if (this.User.IsInRole("student"))
+    {
+        var started = Model.Where(elm => elm.Group.Started == true && elm.Group.Finished == false && elm.Student.AspNetID == User.Identity.GetUserId());
+        var awaiting = Model.Where(elm => elm.Group.Started == false && elm.Student.AspNetID == User.Identity.GetUserId());
+        var finished = Model.Where(elm => elm.Group.Finished == true && elm.Student.AspNetID == User.Identity.GetUserId());
+
+        if (started.Count() != 0)
+        {<h1>Начатые курсы:</h1>}
+
+        foreach (var elm in started)
+        {
+            <div class="jumbotron" style="background-color:palegreen">
+                <div class="row">
+                    <h2><a href="MyCourse/SelectedCourse/@elm.Group.Id">@elm.Group.Course.Name</a></h2>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">Куратор: @elm.Group.Curator.LastName @elm.Group.Curator.Name @elm.Group.Curator.PatrName</div>
+                    <div class="col-md-4">Дата начала: @elm.Group.StartDate</div>
+                    <div class="col-md-4"></div>
+                </div>
+            </div>
+        }
+
+        if (awaiting.Count() != 0)
+        {<h1>В ожидании начала:</h1>}
+
+        foreach (var elm in awaiting)
+        {
+            int count = Model.Where(x => x.Group.Started == false && x.Group == elm.Group).Count();
+            <div class="jumbotron" style="background-color:lightgoldenrodyellow">
+                <div class="row">
+                    <h3>@elm.Group.Course.Name</h3>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">Количество участников: @count</div>
+                    <div class="col-md-8">Начало занятий определяется по комплектации групп: от 3 человек.</div>
+                </div>
+            </div>
+        }
+
+        if (finished.Count() != 0)
+        {<h1>Завершенные курсы:</h1>}
+
+        foreach (var elm in finished)
+        {
+            <div class="jumbotron" style="background-color:palevioletred">
+                <div class="row">
+                    <h3>@elm.Group.Course.Name</h3>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">Куратор: @elm.Group.Curator.LastName @elm.Group.Curator.Name @elm.Group.Curator.PatrName</div>
+                    <div class="col-md-4">Дата начала: @elm.Group.StartDate</div>
+                    <div class="col-md-4">Дата завершения: @elm.Group.FinishDate</div>
+                </div>
+            </div>
+        }
+    }
+
+    if (this.User.IsInRole("teacher"))
+    {
+        var started = Model.Where(elm => elm.Group.Started == true && elm.Group.Finished == false && elm.Group.Curator.AspNetID == User.Identity.GetUserId()).GroupBy(elm => elm.Group.Id);
+        var awaiting = Model.Where(elm => elm.Group.Started == false).GroupBy(elm => elm.Group.Id);
+        var finished = Model.Where(elm => elm.Group.Finished == true && elm.Group.Curator.AspNetID == User.Identity.GetUserId()).GroupBy(elm => elm.Group.Id);
+
+        if (started.Count() != 0)
+        {<h1>Начатые курсы:</h1>}
+
+        foreach (var elm in started)
+        {
+            <div class="jumbotron" style="background-color:palegreen">
+                <div class="row">
+                    <h2><a href="MyCourse/SelectedCourse/@elm.First().Group.Id">@elm.First().Group.Course.Name</a></h2>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">Куратор: @elm.First().Group.Curator.LastName @elm.First().Group.Curator.Name @elm.First().Group.Curator.PatrName</div>
+                    <div class="col-md-4">Дата начала: @elm.First().Group.StartDate</div>
+                    <div class="col-md-4" align="right"><a class="btn btn-danger" href="/MyCourse/FinishGroup/@elm.First().Group.Id">Завершить курс</a></div>
+                </div>
+            </div>
+        }
+
+        if (awaiting.Count() != 0)
+        {<h1>В ожидании начала:</h1>}
+
+        foreach (var elm in awaiting)
+        {
+            int count = Model.Where(x => x.Group.Started == false && x.Group == elm.First().Group).Count();
+            <div class="jumbotron" style="background-color:lightgoldenrodyellow">
+                <div class="row">
+                    <h3>@elm.First().Group.Course.Name</h3>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">Количество участников: @count</div>
+                    <div class="col-md-6" align="right"><a class="btn btn-success" href="/MyCourse/StartGroup/@elm.First().Group.Id">Забрать группу</a></div>
+                </div>
+            </div>
+        }
+
+        if (finished.Count() != 0)
+        {<h1>Завершенные курсы:</h1>}
+
+        foreach (var elm in finished)
+        {
+            <div class="jumbotron" style="background-color:palevioletred">
+                <div class="row">
+                    <h3>@elm.First().Group.Course.Name</h3>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">Куратор: @elm.First().Group.Curator.LastName @elm.First().Group.Curator.Name @elm.First().Group.Curator.PatrName</div>
+                    <div class="col-md-4">Дата начала: @elm.First().Group.StartDate</div>
+                    <div class="col-md-4">Дата завершения: @elm.First().Group.FinishDate</div>                    
+                </div>
+            </div>
+        }
+    }
+}

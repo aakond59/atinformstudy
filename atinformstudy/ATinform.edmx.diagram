@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b12ff2f03376482795b44fa78c368c9c" Name="Diagram1" ZoomLevel="86" >
+        <EntityTypeShape EntityType="ATinform.Course" Width="1.5" PointX="11.375" PointY="3.875" />
+        <EntityTypeShape EntityType="ATinform.Group" Width="1.5" PointX="13.625" PointY="3.875" />
+        <AssociationConnector Association="ATinform.CourseGroupCourse" />
+        <EntityTypeShape EntityType="ATinform.GroupStudent" Width="1.5" PointX="17.75" PointY="5.125" />
+        <AssociationConnector Association="ATinform.GroupGroupStudent" />
+        <EntityTypeShape EntityType="ATinform.Content" Width="1.5" PointX="14.5" PointY="7.625" />
+        <AssociationConnector Association="ATinform.GroupContent" />
+        <EntityTypeShape EntityType="ATinform.Attachment" Width="1.5" PointX="17" PointY="9.125" />
+        <AssociationConnector Association="ATinform.ContentAttachment" />
+        <EntityTypeShape EntityType="ATinform.AtUser" Width="1.5" PointX="17.75" PointY="0.875" />
+        <AssociationConnector Association="ATinform.AtUserGroupStudent" />
+        <AssociationConnector Association="ATinform.AtUserGroup" />
+        <AssociationConnector Association="ATinform.AtUserContent" />
+        <EntityTypeShape EntityType="ATinform.Comment" Width="1.5" PointX="20.125" PointY="8.125" />
+        <AssociationConnector Association="ATinform.AtUserComment" />
+        <AssociationConnector Association="ATinform.CommentAttachment" />
+        <AssociationConnector Association="ATinform.ContentComment" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

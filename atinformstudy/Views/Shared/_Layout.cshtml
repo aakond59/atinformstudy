@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - 1C:Центр обучения</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/CSS/Site.css" rel="stylesheet" type="text/css" media="screen" runat="server" />
+    <link href="~/Content/CSS/bootstrap.css" rel="stylesheet" type="text/css" media="screen" runat="server" />
+    <link rel="shortcut icon" type="image/x-icon" href="~/Content/Images/favicon.ico" />
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    @if (this.User.IsInRole("admin"))
+                    {<span class="icon-bar"></span>}
+                </button>
+                @Html.ActionLink("1С:Центр обучения", "Index", "Home", new { area = "" }, new { @class = "navbar-brand aulogo" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="@(ViewBag.Current == "Home" ? "myactive" : "")">@Html.ActionLink("Главная", "Index", "Home")</li>
+                    <li class="@(ViewBag.Current == "Course" ? "myactive" : "")">@Html.ActionLink("Учебные курсы", "Index", "Course")</li>
+                    <li class="@(ViewBag.Current == "MyCourse" ? "myactive" : "")">@Html.ActionLink("Мои курсы", "Index", "MyCourse")</li>
+                    @if (this.User.IsInRole("admin"))
+                    {
+                        <li class="@(ViewBag.Current == "Register" ? "myactive" : "")">@Html.ActionLink("Зарегистрировать преподавателя", "Register", "Account")</li>
+                    }
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+    </div>
+    <footer class="navbar-fixed-bottom">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-3">
+                </div>
+                <div class="col-xs-6" align="center">
+                    &copy; 1997-@DateTime.Now.Year ГК «АТ-информ»
+                </div>
+                <div class="col-xs-3" align="right">
+                    <a href="https://1c.ru/rus/firm1c/franch.htm" target="_blank"><img src="~/Content/Images/logo1c.png" height="25px" /></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    @section scripts
+    {
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('li.active').removeClass('active');
+                $('a[href="' + location.pathname + '"]').closest('li').addClass('active');
+            });
+        </script>
+    }
+</body>
+</html>

@@ -1,0 +1,605 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ATinform.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="ATinformStoreContainer">
+    <EntitySet Name="CourseSet" EntityType="ATinform.Store.CourseSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GroupSet" EntityType="ATinform.Store.GroupSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GroupStudentSet" EntityType="ATinform.Store.GroupStudentSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ContentSet" EntityType="ATinform.Store.ContentSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="AttachmentSet" EntityType="ATinform.Store.AttachmentSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="AtUserSet" EntityType="ATinform.Store.AtUserSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CommentSet" EntityType="ATinform.Store.CommentSet" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="CourseGroupCourse" Association="ATinform.Store.CourseGroupCourse">
+      <End Role="Course" EntitySet="CourseSet" />
+      <End Role="GroupCourse" EntitySet="GroupSet" />
+    </AssociationSet>
+    <AssociationSet Name="GroupGroupStudent" Association="ATinform.Store.GroupGroupStudent">
+      <End Role="Group" EntitySet="GroupSet" />
+      <End Role="GroupStudent" EntitySet="GroupStudentSet" />
+    </AssociationSet>
+    <AssociationSet Name="GroupContent" Association="ATinform.Store.GroupContent">
+      <End Role="Group" EntitySet="GroupSet" />
+      <End Role="Content" EntitySet="ContentSet" />
+    </AssociationSet>
+    <AssociationSet Name="ContentAttachment" Association="ATinform.Store.ContentAttachment">
+      <End Role="Content" EntitySet="ContentSet" />
+      <End Role="Attachment" EntitySet="AttachmentSet" />
+    </AssociationSet>
+    <AssociationSet Name="AtUserGroupStudent" Association="ATinform.Store.AtUserGroupStudent">
+      <End Role="AtUser" EntitySet="AtUserSet" />
+      <End Role="GroupStudent" EntitySet="GroupStudentSet" />
+    </AssociationSet>
+    <AssociationSet Name="AtUserGroup" Association="ATinform.Store.AtUserGroup">
+      <End Role="AtUser" EntitySet="AtUserSet" />
+      <End Role="Group" EntitySet="GroupSet" />
+    </AssociationSet>
+    <AssociationSet Name="AtUserContent" Association="ATinform.Store.AtUserContent">
+      <End Role="AtUser" EntitySet="AtUserSet" />
+      <End Role="Content" EntitySet="ContentSet" />
+    </AssociationSet>
+    <AssociationSet Name="AtUserComment" Association="ATinform.Store.AtUserComment">
+      <End Role="AtUser" EntitySet="AtUserSet" />
+      <End Role="Comment" EntitySet="CommentSet" />
+    </AssociationSet>
+    <AssociationSet Name="CommentAttachment" Association="ATinform.Store.CommentAttachment">
+      <End Role="Comment" EntitySet="CommentSet" />
+      <End Role="Attachment" EntitySet="AttachmentSet" />
+    </AssociationSet>
+    <AssociationSet Name="ContentComment" Association="ATinform.Store.ContentComment">
+      <End Role="Content" EntitySet="ContentSet" />
+      <End Role="Comment" EntitySet="CommentSet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="CourseSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Hours" Type="tinyint" Nullable="false" />
+    <Property Name="Price" Type="decimal" Nullable="false" Precision="18" Scale="0" />
+  </EntityType>
+  <EntityType Name="GroupSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Started" Type="bit" Nullable="false" DefaultValue="false" />
+    <Property Name="Finished" Type="bit" Nullable="false" DefaultValue="false" />
+    <Property Name="StartDate" Type="datetime" Nullable="true" />
+    <Property Name="FinishDate" Type="datetime" Nullable="true" />
+    <Property Name="Course_Id" Type="int" Nullable="false" />
+    <Property Name="Curator_Id" Type="int" Nullable="true" />
+  </EntityType>
+  <EntityType Name="GroupStudentSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Group_Id" Type="int" Nullable="false" />
+    <Property Name="Student_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ContentSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PostedDate" Type="datetime" Nullable="false" />
+    <Property Name="PostTheme" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Text" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Group_Id" Type="int" Nullable="false" />
+    <Property Name="AtUser_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AttachmentSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FilePath" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="FileName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Content_Id" Type="int" Nullable="true" />
+    <Property Name="Comment_Id" Type="int" Nullable="true" />
+  </EntityType>
+  <EntityType Name="AtUserSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AspNetID" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="PatrName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Role" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CommentSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PostedDate" Type="datetime" Nullable="false" />
+    <Property Name="Text" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="AtUser_Id" Type="int" Nullable="false" />
+    <Property Name="Content_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="CourseGroupCourse">
+    <End Role="Course" Type="ATinform.Store.CourseSet" Multiplicity="1" />
+    <End Role="GroupCourse" Type="ATinform.Store.GroupSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Course">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="GroupCourse">
+        <PropertyRef Name="Course_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="GroupGroupStudent">
+    <End Role="Group" Type="ATinform.Store.GroupSet" Multiplicity="1" />
+    <End Role="GroupStudent" Type="ATinform.Store.GroupStudentSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Group">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="GroupStudent">
+        <PropertyRef Name="Group_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="GroupContent">
+    <End Role="Group" Type="ATinform.Store.GroupSet" Multiplicity="1" />
+    <End Role="Content" Type="ATinform.Store.ContentSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Group">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Content">
+        <PropertyRef Name="Group_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ContentAttachment">
+    <End Role="Content" Type="ATinform.Store.ContentSet" Multiplicity="0..1" />
+    <End Role="Attachment" Type="ATinform.Store.AttachmentSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Content">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Attachment">
+        <PropertyRef Name="Content_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AtUserGroupStudent">
+    <End Role="AtUser" Type="ATinform.Store.AtUserSet" Multiplicity="1" />
+    <End Role="GroupStudent" Type="ATinform.Store.GroupStudentSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AtUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="GroupStudent">
+        <PropertyRef Name="Student_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AtUserGroup">
+    <End Role="AtUser" Type="ATinform.Store.AtUserSet" Multiplicity="0..1" />
+    <End Role="Group" Type="ATinform.Store.GroupSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AtUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Group">
+        <PropertyRef Name="Curator_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AtUserContent">
+    <End Role="AtUser" Type="ATinform.Store.AtUserSet" Multiplicity="1" />
+    <End Role="Content" Type="ATinform.Store.ContentSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AtUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Content">
+        <PropertyRef Name="AtUser_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AtUserComment">
+    <End Role="AtUser" Type="ATinform.Store.AtUserSet" Multiplicity="1" />
+    <End Role="Comment" Type="ATinform.Store.CommentSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AtUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Comment">
+        <PropertyRef Name="AtUser_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CommentAttachment">
+    <End Role="Comment" Type="ATinform.Store.CommentSet" Multiplicity="0..1" />
+    <End Role="Attachment" Type="ATinform.Store.AttachmentSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Comment">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Attachment">
+        <PropertyRef Name="Comment_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ContentComment">
+    <End Role="Content" Type="ATinform.Store.ContentSet" Multiplicity="1" />
+    <End Role="Comment" Type="ATinform.Store.CommentSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Content">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Comment">
+        <PropertyRef Name="Content_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="ATinform" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="ATinformContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CourseSet" EntityType="ATinform.Course" />
+          <EntitySet Name="GroupSet" EntityType="ATinform.Group" />
+          <AssociationSet Name="CourseGroupCourse" Association="ATinform.CourseGroupCourse">
+            <End Role="Course" EntitySet="CourseSet" />
+            <End Role="GroupCourse" EntitySet="GroupSet" />
+          </AssociationSet>
+          <EntitySet Name="GroupStudentSet" EntityType="ATinform.GroupStudent" />
+          <AssociationSet Name="GroupGroupStudent" Association="ATinform.GroupGroupStudent">
+            <End Role="Group" EntitySet="GroupSet" />
+            <End Role="GroupStudent" EntitySet="GroupStudentSet" />
+          </AssociationSet>
+          <EntitySet Name="ContentSet" EntityType="ATinform.Content" />
+          <AssociationSet Name="GroupContent" Association="ATinform.GroupContent">
+            <End Role="Group" EntitySet="GroupSet" />
+            <End Role="Content" EntitySet="ContentSet" />
+          </AssociationSet>
+          <EntitySet Name="AttachmentSet" EntityType="ATinform.Attachment" />
+          <AssociationSet Name="ContentAttachment" Association="ATinform.ContentAttachment">
+            <End Role="Content" EntitySet="ContentSet" />
+            <End Role="Attachment" EntitySet="AttachmentSet" />
+          </AssociationSet>
+          <EntitySet Name="AtUserSet" EntityType="ATinform.AtUser" />
+          <AssociationSet Name="AtUserGroupStudent" Association="ATinform.AtUserGroupStudent">
+            <End Role="AtUser" EntitySet="AtUserSet" />
+            <End Role="GroupStudent" EntitySet="GroupStudentSet" />
+          </AssociationSet>
+          <AssociationSet Name="AtUserGroup" Association="ATinform.AtUserGroup">
+            <End Role="AtUser" EntitySet="AtUserSet" />
+            <End Role="Group" EntitySet="GroupSet" />
+          </AssociationSet>
+          <AssociationSet Name="AtUserContent" Association="ATinform.AtUserContent">
+            <End Role="AtUser" EntitySet="AtUserSet" />
+            <End Role="Content" EntitySet="ContentSet" />
+          </AssociationSet>
+          <EntitySet Name="CommentSet" EntityType="ATinform.Comment" />
+          <AssociationSet Name="AtUserComment" Association="ATinform.AtUserComment">
+            <End Role="AtUser" EntitySet="AtUserSet" />
+            <End Role="Comment" EntitySet="CommentSet" />
+          </AssociationSet>
+          <AssociationSet Name="CommentAttachment" Association="ATinform.CommentAttachment">
+            <End Role="Comment" EntitySet="CommentSet" />
+            <End Role="Attachment" EntitySet="AttachmentSet" />
+          </AssociationSet>
+          <AssociationSet Name="ContentComment" Association="ATinform.ContentComment">
+            <End Role="Content" EntitySet="ContentSet" />
+            <End Role="Comment" EntitySet="CommentSet" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Hours" Type="Byte" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <NavigationProperty Name="Group" Relationship="ATinform.CourseGroupCourse" FromRole="Course" ToRole="GroupCourse" />
+        </EntityType>
+        <EntityType Name="Group">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Course" Relationship="ATinform.CourseGroupCourse" FromRole="GroupCourse" ToRole="Course" />
+          <Property Name="Started" Type="Boolean" Nullable="false" DefaultValue="False" />
+          <Property Name="Finished" Type="Boolean" Nullable="false" DefaultValue="False" />
+          <Property Name="StartDate" Type="DateTime" Nullable="true" />
+          <Property Name="FinishDate" Type="DateTime" Nullable="true" />
+          <NavigationProperty Name="GroupStudent" Relationship="ATinform.GroupGroupStudent" FromRole="Group" ToRole="GroupStudent" />
+          <NavigationProperty Name="Content" Relationship="ATinform.GroupContent" FromRole="Group" ToRole="Content" />
+          <NavigationProperty Name="Curator" Relationship="ATinform.AtUserGroup" FromRole="Group" ToRole="AtUser" />
+        </EntityType>
+        <Association Name="CourseGroupCourse">
+          <End Type="ATinform.Course" Role="Course" Multiplicity="1" />
+          <End Type="ATinform.Group" Role="GroupCourse" Multiplicity="*" />
+        </Association>
+        <EntityType Name="GroupStudent">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <NavigationProperty Name="Group" Relationship="ATinform.GroupGroupStudent" FromRole="GroupStudent" ToRole="Group" />
+          <NavigationProperty Name="Student" Relationship="ATinform.AtUserGroupStudent" FromRole="GroupStudent" ToRole="AtUser" />
+        </EntityType>
+        <Association Name="GroupGroupStudent">
+          <End Type="ATinform.Group" Role="Group" Multiplicity="1" />
+          <End Type="ATinform.GroupStudent" Role="GroupStudent" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Content">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PostedDate" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="Group" Relationship="ATinform.GroupContent" FromRole="Content" ToRole="Group" />
+          <Property Name="PostTheme" Type="String" Nullable="false" />
+          <Property Name="Text" Type="String" Nullable="false" />
+          <NavigationProperty Name="Attachment" Relationship="ATinform.ContentAttachment" FromRole="Content" ToRole="Attachment" />
+          <NavigationProperty Name="AtUser" Relationship="ATinform.AtUserContent" FromRole="Content" ToRole="AtUser" />
+          <NavigationProperty Name="Comment" Relationship="ATinform.ContentComment" FromRole="Content" ToRole="Comment" />
+        </EntityType>
+        <Association Name="GroupContent">
+          <End Type="ATinform.Group" Role="Group" Multiplicity="1" />
+          <End Type="ATinform.Content" Role="Content" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Attachment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Content" Relationship="ATinform.ContentAttachment" FromRole="Attachment" ToRole="Content" />
+          <Property Name="FilePath" Type="String" Nullable="false" />
+          <Property Name="FileName" Type="String" Nullable="false" />
+          <NavigationProperty Name="Comment" Relationship="ATinform.CommentAttachment" FromRole="Attachment" ToRole="Comment" />
+        </EntityType>
+        <Association Name="ContentAttachment">
+          <End Type="ATinform.Content" Role="Content" Multiplicity="0..1" />
+          <End Type="ATinform.Attachment" Role="Attachment" Multiplicity="*" />
+        </Association>
+        <EntityType Name="AtUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AspNetID" Type="String" Nullable="false" Unicode="true" FixedLength="false" MaxLength="128" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="LastName" Type="String" Nullable="false" />
+          <Property Name="PatrName" Type="String" Nullable="false" />
+          <Property Name="Email" Type="String" Nullable="false" />
+          <Property Name="Role" Type="String" Nullable="false" />
+          <NavigationProperty Name="GroupStudent" Relationship="ATinform.AtUserGroupStudent" FromRole="AtUser" ToRole="GroupStudent" />
+          <NavigationProperty Name="Group" Relationship="ATinform.AtUserGroup" FromRole="AtUser" ToRole="Group" />
+          <NavigationProperty Name="Content" Relationship="ATinform.AtUserContent" FromRole="AtUser" ToRole="Content" />
+          <NavigationProperty Name="Comment" Relationship="ATinform.AtUserComment" FromRole="AtUser" ToRole="Comment" />
+        </EntityType>
+        <Association Name="AtUserGroupStudent">
+          <End Type="ATinform.AtUser" Role="AtUser" Multiplicity="1" />
+          <End Type="ATinform.GroupStudent" Role="GroupStudent" Multiplicity="*" />
+        </Association>
+        <Association Name="AtUserGroup">
+          <End Type="ATinform.AtUser" Role="AtUser" Multiplicity="0..1" />
+          <End Type="ATinform.Group" Role="Group" Multiplicity="*" />
+        </Association>
+        <Association Name="AtUserContent">
+          <End Type="ATinform.AtUser" Role="AtUser" Multiplicity="1" />
+          <End Type="ATinform.Content" Role="Content" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PostedDate" Type="DateTime" Nullable="false" />
+          <Property Name="Text" Type="String" Nullable="false" />
+          <NavigationProperty Name="AtUser" Relationship="ATinform.AtUserComment" FromRole="Comment" ToRole="AtUser" />
+          <NavigationProperty Name="Attachment" Relationship="ATinform.CommentAttachment" FromRole="Comment" ToRole="Attachment" />
+          <NavigationProperty Name="Content" Relationship="ATinform.ContentComment" FromRole="Comment" ToRole="Content" />
+        </EntityType>
+        <Association Name="AtUserComment">
+          <End Type="ATinform.AtUser" Role="AtUser" Multiplicity="1" />
+          <End Type="ATinform.Comment" Role="Comment" Multiplicity="*" />
+        </Association>
+        <Association Name="CommentAttachment">
+          <End Type="ATinform.Comment" Role="Comment" Multiplicity="0..1" />
+          <End Type="ATinform.Attachment" Role="Attachment" Multiplicity="*" />
+        </Association>
+        <Association Name="ContentComment">
+          <End Type="ATinform.Content" Role="Content" Multiplicity="1" />
+          <End Type="ATinform.Comment" Role="Comment" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ATinformStoreContainer" CdmEntityContainer="ATinformContainer">
+    <EntitySetMapping Name="CourseSet">
+      <EntityTypeMapping TypeName="IsTypeOf(ATinform.Course)">
+        <MappingFragment StoreEntitySet="CourseSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Hours" ColumnName="Hours" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GroupSet">
+      <EntityTypeMapping TypeName="IsTypeOf(ATinform.Group)">
+        <MappingFragment StoreEntitySet="GroupSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Started" ColumnName="Started" />
+          <ScalarProperty Name="Finished" ColumnName="Finished" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="FinishDate" ColumnName="FinishDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GroupStudentSet">
+      <EntityTypeMapping TypeName="IsTypeOf(ATinform.GroupStudent)">
+        <MappingFragment StoreEntitySet="GroupStudentSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ContentSet">
+      <EntityTypeMapping TypeName="IsTypeOf(ATinform.Content)">
+        <MappingFragment StoreEntitySet="ContentSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="PostedDate" ColumnName="PostedDate" />
+          <ScalarProperty Name="PostTheme" ColumnName="PostTheme" />
+          <ScalarProperty Name="Text" ColumnName="Text" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AttachmentSet">
+      <EntityTypeMapping TypeName="IsTypeOf(ATinform.Attachment)">
+        <MappingFragment StoreEntitySet="AttachmentSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="FilePath" ColumnName="FilePath" />
+          <ScalarProperty Name="FileName" ColumnName="FileName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AtUserSet">
+      <EntityTypeMapping TypeName="IsTypeOf(ATinform.AtUser)">
+        <MappingFragment StoreEntitySet="AtUserSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="AspNetID" ColumnName="AspNetID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="PatrName" ColumnName="PatrName" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Role" ColumnName="Role" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CommentSet">
+      <EntityTypeMapping TypeName="IsTypeOf(ATinform.Comment)">
+        <MappingFragment StoreEntitySet="CommentSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="PostedDate" ColumnName="PostedDate" />
+          <ScalarProperty Name="Text" ColumnName="Text" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="CourseGroupCourse" TypeName="ATinform.CourseGroupCourse" StoreEntitySet="GroupSet">
+      <EndProperty Name="Course">
+        <ScalarProperty Name="Id" ColumnName="Course_Id" />
+      </EndProperty>
+      <EndProperty Name="GroupCourse">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="GroupGroupStudent" TypeName="ATinform.GroupGroupStudent" StoreEntitySet="GroupStudentSet">
+      <EndProperty Name="Group">
+        <ScalarProperty Name="Id" ColumnName="Group_Id" />
+      </EndProperty>
+      <EndProperty Name="GroupStudent">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="GroupContent" TypeName="ATinform.GroupContent" StoreEntitySet="ContentSet">
+      <EndProperty Name="Group">
+        <ScalarProperty Name="Id" ColumnName="Group_Id" />
+      </EndProperty>
+      <EndProperty Name="Content">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ContentAttachment" TypeName="ATinform.ContentAttachment" StoreEntitySet="AttachmentSet">
+      <EndProperty Name="Content">
+        <ScalarProperty Name="Id" ColumnName="Content_Id" />
+      </EndProperty>
+      <EndProperty Name="Attachment">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+      <Condition ColumnName="Content_Id" IsNull="false" />
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="AtUserGroupStudent" TypeName="ATinform.AtUserGroupStudent" StoreEntitySet="GroupStudentSet">
+      <EndProperty Name="AtUser">
+        <ScalarProperty Name="Id" ColumnName="Student_Id" />
+      </EndProperty>
+      <EndProperty Name="GroupStudent">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="AtUserGroup" TypeName="ATinform.AtUserGroup" StoreEntitySet="GroupSet">
+      <EndProperty Name="AtUser">
+        <ScalarProperty Name="Id" ColumnName="Curator_Id" />
+      </EndProperty>
+      <EndProperty Name="Group">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+      <Condition ColumnName="Curator_Id" IsNull="false" />
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="AtUserContent" TypeName="ATinform.AtUserContent" StoreEntitySet="ContentSet">
+      <EndProperty Name="AtUser">
+        <ScalarProperty Name="Id" ColumnName="AtUser_Id" />
+      </EndProperty>
+      <EndProperty Name="Content">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="AtUserComment" TypeName="ATinform.AtUserComment" StoreEntitySet="CommentSet">
+      <EndProperty Name="AtUser">
+        <ScalarProperty Name="Id" ColumnName="AtUser_Id" />
+      </EndProperty>
+      <EndProperty Name="Comment">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="CommentAttachment" TypeName="ATinform.CommentAttachment" StoreEntitySet="AttachmentSet">
+      <EndProperty Name="Comment">
+        <ScalarProperty Name="Id" ColumnName="Comment_Id" />
+      </EndProperty>
+      <EndProperty Name="Attachment">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+      <Condition ColumnName="Comment_Id" IsNull="false" />
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ContentComment" TypeName="ATinform.ContentComment" StoreEntitySet="CommentSet">
+      <EndProperty Name="Content">
+        <ScalarProperty Name="Id" ColumnName="Content_Id" />
+      </EndProperty>
+      <EndProperty Name="Comment">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

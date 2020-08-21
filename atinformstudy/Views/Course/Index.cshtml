@@ -1,0 +1,54 @@
+﻿@using atinformstudy.Models;
+@model List<Course>
+@{
+    ViewBag.Title = "Учебные курсы";
+}
+
+<table class="table table-hover table-striped">
+    <tr>
+        <th>Наши курсы</th>
+        <th>Часов</th>
+        <th>Стоимость, руб.</th>
+        <th></th>
+    </tr>
+    @foreach (var elm in Model)
+    {
+        <tr>
+            <td><a class="myFun" data-id=@elm.Id>@elm.Name</a></td>
+            <td>@elm.Hours</td>
+            <td>@elm.Price</td>
+            <td><a href="/Course/Payment/@elm.Id"><img height="40px" src="~/Content/Images/ecommerce_basket.png"/></a></td>
+        </tr>
+    }
+</table>
+
+<!-- Modal -->
+
+<div class="modal fade" id="modalDescription" tabindex="-1" role="dialog" aria-labelledby="modalDescriptionTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <iframe id="myFrame" src="" width=100% height="500" scrolling="yes" frameborder="0"></iframe>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+<script type="text/javascript"> //скрипт для загрузки документа описания курса в модальное окно
+
+    $(document).ready(function () {
+
+        $('.myFun').click(function () {
+            var $docId = $(this).data('id');
+            $('#myFrame').attr('src', '../Content/CourseDescriptions/' + $docId + '.html');
+            $('#modalDescription').modal('show');
+        });
+
+    });
+</script>
+}

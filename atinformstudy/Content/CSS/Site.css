@@ -1,0 +1,62 @@
+﻿body {
+    padding-top: 50px !important;
+    padding-bottom: 30px !important;
+}
+
+.body-content {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+}
+
+.dl-horizontal dt {
+    white-space: normal !important;
+}
+
+.navbar-inverse {
+    background-color: #780001 !important;
+}
+
+a.mynav {
+    background-color: #780001 !important;
+}
+
+.navbar-inverse .navbar-brand, .navbar-inverse .navbar-nav > li > a {
+    color: #ffffff !important;
+}
+
+.navbar-nav > li > a:hover {
+    color: #780001 !important;
+    background-color: #ffffff !important;
+    border-radius: 5px !important;
+    font-weight: bold;
+}
+
+.navbar-nav > li.myactive > a {
+    color: #780001 !important;
+    background-color: #ffffff !important;
+    border-radius: 5px !important;
+    font-weight: bold;
+}
+
+
+.aulogo {
+    background: url(../Images/logo.png) !important;
+    background-repeat: no-repeat !important;
+    background-size: 50px 50px !important;
+    background-position-x: 5px !important;
+    padding-left: 65px !important;
+}
+
+footer {
+    background-color: #780001 !important;
+    color: #ffffff !important;
+    padding: 5px !important;
+}
+
+p {
+    text-indent: 1.25em !important;
+}
+
+tr {
+    padding: 10px !important;
+}
